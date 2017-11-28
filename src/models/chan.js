@@ -57,11 +57,7 @@ Chan.prototype.pushMessage = function(client, msg, increasesUnread) {
 		return;
 	}
 
-	this.messages.push(msg);
-
-	if (client.config.log === true) {
-		writeUserLog.call(this, client, msg);
-	}
+	this.writeUserLog(client, msg);
 
 	if (Helper.config.maxHistory >= 0 && this.messages.length > Helper.config.maxHistory) {
 		const deleted = this.messages.splice(0, this.messages.length - Helper.config.maxHistory);
@@ -173,11 +169,21 @@ Chan.prototype.getFilteredClone = function(lastActiveChannel, lastMessage) {
 	}, {});
 };
 
-function writeUserLog(client, msg) {
+Chan.prototype.writeUserLog = function(client, msg) {
+	this.messages.push(msg);
+
 	const target = client.find(this.id);
 
 	if (!target) {
 		return false;
+	}
+
+	if (this.type === Chan.Type.CHANNEL || this.type === Chan.Type.QUERY) {
+		client.manager.messageStorage.index(target.network.uuid, this.name, msg);
+	}
+
+	if (!client.config.log) {
+		return;
 	}
 
 	userLog.write(
@@ -186,4 +192,27 @@ function writeUserLog(client, msg) {
 		this.type === Chan.Type.LOBBY ? target.network.host : this.name,
 		msg
 	);
-}
+};
+
+Chan.prototype.loadMessages = function(client, network, offset) {
+	client.manager.messageStorage
+		.getMessages(network, this, offset)
+		.then((messages) => {
+			if (messages.length === 0) {
+				return;
+			}
+
+			// TODO: This needs to insert correctly based on time
+			this.messages.unshift(...messages);
+
+			if (!this.firstUnread) {
+				this.firstUnread = messages[messages.length - 1].id;
+			}
+
+			client.emit("more", {
+				chan: this.id,
+				messages: messages,
+			});
+		})
+		.catch((err) => log.error(`Failed to load messages: ${err}`));
+};
