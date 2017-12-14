@@ -8,6 +8,9 @@ const cleanIrcMessage = require("../../../client/js/libs/handlebars/ircmessagepa
 const findLinks = require("../../../client/js/libs/handlebars/ircmessageparser/findLinks");
 const storage = require("../storage");
 
+const mediaTypeRegex = /^(audio|video)\/.+/;
+const linkRegex = /^https?:\/\//;
+
 process.setMaxListeners(0);
 
 module.exports = function(client, chan, msg) {
@@ -19,7 +22,7 @@ module.exports = function(client, chan, msg) {
 	const cleanText = cleanIrcMessage(msg.text);
 
 	// We will only try to prefetch http(s) links
-	const links = findLinks(cleanText).filter((w) => /^https?:\/\//.test(w.link));
+	const links = findLinks(cleanText).filter((w) => linkRegex.test(w.link));
 
 	if (links.length === 0) {
 		return;
@@ -49,8 +52,50 @@ module.exports = function(client, chan, msg) {
 
 function parse(msg, preview, res, client) {
 	switch (res.type) {
-	case "text/html":
-		var $ = cheerio.load(res.data);
+	case "text/html": {
+		const $ = cheerio.load(res.data);
+		let foundMedia = false;
+
+		["video", "audio"].forEach((type) => {
+			if (foundMedia) {
+				return;
+			}
+
+			$(`meta[property="og:${type}:type"]`).each(function(i) {
+				const mimeType = $(this).attr("content");
+
+				if (mediaTypeRegex.test(mimeType)) {
+					// If we match a clean video or audio tag, parse that as a preview instead
+					const mediaUrl = $($(`meta[property="og:${type}"]`).get(i)).attr("content");
+
+					// Make sure media is a valid url
+					if (!linkRegex.test(mediaUrl)) {
+						return;
+					}
+
+					foundMedia = true;
+
+					fetch(escapeHeader(mediaUrl), (resMedia) => {
+						if (resMedia === null || !mediaTypeRegex.test(resMedia.type)) {
+							return; // TODO: This should fallback to link previews
+						}
+
+						preview.type = type;
+						preview.media = mediaUrl;
+						preview.mediaType = resMedia.type;
+
+						handlePreview(client, msg, preview, resMedia);
+					});
+
+					return false;
+				}
+			});
+		});
+
+		if (foundMedia) {
+			return;
+		}
+
 		preview.type = "link";
 		preview.head =
 			$('meta[property="og:title"]').attr("content")
@@ -71,7 +116,7 @@ function parse(msg, preview, res, client) {
 		}
 
 		// Make sure thumbnail is a valid url
-		if (!/^https?:\/\//.test(preview.thumb)) {
+		if (!linkRegex.test(preview.thumb)) {
 			preview.thumb = "";
 		}
 
@@ -91,6 +136,7 @@ function parse(msg, preview, res, client) {
 		}
 
 		break;
+	}
 
 	case "image/png":
 	case "image/gif":
@@ -118,8 +164,10 @@ function parse(msg, preview, res, client) {
 		if (!preview.link.startsWith("https://")) {
 			break;
 		}
+
 		preview.type = "audio";
-		preview.res = res.type;
+		preview.media = preview.link;
+		preview.mediaType = res.type;
 
 		break;
 
@@ -129,8 +177,10 @@ function parse(msg, preview, res, client) {
 		if (!preview.link.startsWith("https://")) {
 			break;
 		}
-		preview.res = res.type;
+
 		preview.type = "video";
+		preview.media = preview.link;
+		preview.mediaType = res.type;
 
 		break;
 
@@ -198,7 +248,7 @@ function fetch(uri, cb) {
 				if (contentLength > limit) {
 					req.abort();
 				}
-			} else if (/^(audio|video)\/.+/.test(res.headers["content-type"])) {
+			} else if (mediaTypeRegex.test(res.headers["content-type"])) {
 				req.abort(); // ensure server doesn't download the audio file
 			} else {
 				// if not image, limit download to 50kb, since we need only meta tags
