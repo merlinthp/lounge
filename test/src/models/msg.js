@@ -2,8 +2,8 @@
 
 const expect = require("chai").expect;
 
-const Msg = require("../../src/models/msg");
-const User = require("../../src/models/user");
+const Msg = require("../../../src/models/msg");
+const User = require("../../../src/models/user");
 
 describe("Msg", function() {
 	["from", "target"].forEach((prop) => {

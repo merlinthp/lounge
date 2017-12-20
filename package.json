@@ -22,7 +22,8 @@
     "build": "webpack",
     "watch": "webpack --watch",
     "test": "npm-run-all --aggregate-output --parallel --continue-on-error test:* lint:*",
-    "test:mocha": "mocha --colors",
+    "test:client": "mocha --colors --require babel-polyfill --require babel-register test/client",
+    "test:server": "mocha --colors test/src",
     "lint:js": "eslint . --report-unused-disable-directives --color",
     "lint:css": "stylelint --color --report-needless-disables=error \"client/**/*.css\""
   },
@@ -63,7 +64,9 @@
   "devDependencies": {
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
+    "babel-polyfill": "6.26.0",
     "babel-preset-env": "1.6.1",
+    "babel-register": "6.26.0",
     "chai": "4.1.2",
     "copy-webpack-plugin": "4.3.0",
     "css.escape": "1.5.1",

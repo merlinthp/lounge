@@ -2,9 +2,9 @@
 
 const path = require("path");
 const expect = require("chai").expect;
-const util = require("../util");
-const Helper = require("../../src/helper");
-const link = require("../../src/plugins/irc-events/link.js");
+const util = require("../../util");
+const Helper = require("../../../src/helper");
+const link = require("../../../src/plugins/irc-events/link.js");
 
 describe("Link plugin", function() {
 	this.slow(200);
@@ -14,7 +14,7 @@ describe("Link plugin", function() {
 	beforeEach(function(done) {
 		app = util.createWebserver();
 		app.get("/real-test-image.png", function(req, res) {
-			res.sendFile(path.resolve(__dirname, "../../client/img/apple-touch-icon-120x120.png"));
+			res.sendFile(path.resolve(__dirname, "../../../client/img/apple-touch-icon-120x120.png"));
 		});
 		this.connection = app.listen(9002, done);
 

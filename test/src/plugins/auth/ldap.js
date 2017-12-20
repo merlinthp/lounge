@@ -1,7 +1,7 @@
 "use strict";
 
-const ldapAuth = require("../../../src/plugins/auth/ldap");
-const Helper = require("../../../src/helper");
+const ldapAuth = require("../../../../src/plugins/auth/ldap");
+const Helper = require("../../../../src/helper");
 const ldap = require("ldapjs");
 const expect = require("chai").expect;
 

@@ -1,10 +1,10 @@
 "use strict";
 
 const expect = require("chai").expect;
-const Chan = require("../../src/models/chan");
-const Msg = require("../../src/models/msg");
-const User = require("../../src/models/user");
-const Network = require("../../src/models/network");
+const Chan = require("../../../src/models/chan");
+const Msg = require("../../../src/models/msg");
+const User = require("../../../src/models/user");
+const Network = require("../../../src/models/network");
 
 describe("Network", function() {
 	describe("#export()", function() {

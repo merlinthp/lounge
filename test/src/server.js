@@ -1,6 +1,6 @@
 "use strict";
 
-const Helper = require("../src/helper");
+const Helper = require("../../src/helper");
 const expect = require("chai").expect;
 const request = require("request");
 const io = require("socket.io-client");
@@ -14,7 +14,7 @@ describe("Server", function() {
 		originalLogInfo = log.info;
 		log.info = () => {};
 
-		server = require("../src/server")();
+		server = require("../../src/server")();
 	});
 
 	after(function(done) {
