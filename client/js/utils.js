@@ -3,6 +3,7 @@
 const $ = require("jquery");
 const escape = require("css.escape");
 const input = $("#input");
+const constants = require("./constants");
 
 var serverHash = -1;
 var lastMessageId = -1;
@@ -14,13 +15,13 @@ module.exports = {
 	lastMessageId,
 	confirmExit,
 	forceFocus,
+	hasRoleInChannel,
 	move,
 	resetHeight,
 	setNick,
 	toggleNickEditor,
 	toggleNotificationMarkers,
 	requestIdleCallback,
-	isOpInChannel,
 };
 
 function findCurrentNetworkChan(name) {
@@ -40,12 +41,12 @@ function resetHeight(element) {
 }
 
 // Given a channel element will determine if the lounge user is Op in that channel
-function isOpInChannel(channel) {
+function hasRoleInChannel(channel, roles = constants.allPriviledgeModes) {
 	const channelID = channel.data("id");
 	const network = $("#sidebar .network").has(`.chan[data-id="${channelID}"]`);
 	const ownNick = network.data("nick");
-	const isOP = channel.find(`.users .user-mode.op .user[data-name="${escape(ownNick)}"]`).length;
-	return isOP;
+	const user = channel.find(`.users .user[data-name="${escape(ownNick)}"]`).first();
+	return user.parents("." + roles.join(", .")).length > 0;
 }
 
 // Triggering click event opens the virtual keyboard on mobile

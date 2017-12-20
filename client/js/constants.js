@@ -1,4 +1,5 @@
 "use strict";
+const modes = require("./libs/handlebars/modes");
 
 const colorCodeMap = [
 	["00", "White"],
@@ -105,11 +106,16 @@ const timeFormats = {
 	msgWithSeconds: "HH:mm:ss",
 };
 
+const allPriviledgeModes = Object.values(modes.modes);
+allPriviledgeModes.splice(-1, 1);
+
 module.exports = {
+	actionTypes: actionTypes,
+	allPriviledgeModes,
 	colorCodeMap: colorCodeMap,
 	commands: commands,
 	condensedTypes: condensedTypes,
 	condensedTypesQuery: "." + condensedTypes.join(", ."),
-	actionTypes: actionTypes,
+	modes,
 	timeFormats: timeFormats,
 };
