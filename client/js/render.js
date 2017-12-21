@@ -24,6 +24,7 @@ const historyObserver = window.IntersectionObserver ?
 module.exports = {
 	appendMessage,
 	buildChannelMessages,
+	collapseNetwork,
 	renderChannel,
 	renderChannelUsers,
 	renderNetworks,
@@ -283,4 +284,8 @@ function loadMoreHistory(entries) {
 
 		target.click();
 	});
+}
+
+function collapseNetwork(lobby) {
+	$("#sidebar").find(`.network[data-id='${lobby}']`).toggleClass("collapsed");
 }

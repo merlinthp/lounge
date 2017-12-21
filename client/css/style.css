@@ -263,6 +263,8 @@ kbd {
 .context-menu-list::before { content: "\f03a"; /* http://fontawesome.io/icon/list/ */ }
 .context-menu-action-whois::before { content: "\f05a"; /* http://fontawesome.io/icon/info-circle/  */ }
 .context-menu-action-kick::before { content: "\f05e"; /* http://fontawesome.io/icon/ban/ */ }
+.context-menu-collapse::before { content: "\f066"; /* http://fontawesome.io/icon/compress/ */ }
+.context-menu-expand::before { content: "\f065"; /* http://fontawesome.io/icon/expand/ */ }
 
 .context-menu-network::before,
 #sidebar .chan.lobby::before,
@@ -513,6 +515,10 @@ kbd {
 #sidebar .empty {
 	color: #99a2b4;
 	font-size: 14px;
+}
+
+#sidebar .network.collapsed .chan:not(.lobby) {
+	display: none;
 }
 
 #sidebar button,
