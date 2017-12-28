@@ -246,7 +246,8 @@ kbd {
 #help .report-issue-link::before,
 #nick button::before,
 #image-viewer .previous-image-btn::before,
-#image-viewer .next-image-btn::before {
+#image-viewer .next-image-btn::before,
+#sidebar .collapse-network::before {
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit; /* Can't have font-size inherit on line above, so need to override */
 	-webkit-font-smoothing: antialiased;
@@ -263,8 +264,6 @@ kbd {
 .context-menu-list::before { content: "\f03a"; /* http://fontawesome.io/icon/list/ */ }
 .context-menu-action-whois::before { content: "\f05a"; /* http://fontawesome.io/icon/info-circle/  */ }
 .context-menu-action-kick::before { content: "\f05e"; /* http://fontawesome.io/icon/ban/ */ }
-.context-menu-collapse::before { content: "\f066"; /* http://fontawesome.io/icon/compress/ */ }
-.context-menu-expand::before { content: "\f065"; /* http://fontawesome.io/icon/expand/ */ }
 
 .context-menu-network::before,
 #sidebar .chan.lobby::before,
@@ -281,6 +280,10 @@ kbd {
 
 #sidebar .chan.special::before,
 #chat .special .title::before { content: "\f03a"; /* http://fontawesome.io/icon/list/ */ }
+
+.chan::before {
+	padding-top: 3px;
+}
 
 #footer .sign-in::before { content: "\f023"; /* http://fontawesome.io/icon/lock/ */ }
 #footer .connect::before { content: "\f067"; /* http://fontawesome.io/icon/plus/ */ }
@@ -562,14 +565,14 @@ kbd {
 	width: 100%;
 }
 
-#sidebar .chan:first-child {
+#sidebar .chan.lobby {
 	color: #84ce88;
 	font-size: 15px;
 	font-weight: bold;
 }
 
-#sidebar .chan:first-child:hover,
-#sidebar .chan:first-child.active {
+#sidebar .chan.lobby:hover,
+#sidebar .chan.lobby.active {
 	color: #c0f8c3;
 }
 
@@ -674,6 +677,34 @@ kbd {
 
 #sidebar .lobby .add-channel.opened {
 	transform: rotate(45deg);
+}
+
+#sidebar .network .collapse-network {
+	border-radius: 3px;
+	width: 18px;
+	height: 18px;
+	opacity: 0.4;
+	transition: opacity 0.2s, background-color 0.2s, transform 0.2s;
+	float: left;
+	padding-top: 8px;
+	padding-left: 5px;
+}
+
+#sidebar .network .collapse-network::before {
+	font-weight: normal;
+	display: inline-block;
+	line-height: 16px;
+	text-align: center;
+	content: "\f0d7"; /* http://fontawesome.io/icon/caret-down/ */
+	color: #fff;
+}
+
+#sidebar .network.collapsed .collapse-network::before {
+	content: "\f0da"; /* http://fontawesome.io/icon/caret-right/ */
+}
+
+#sidebar .collapse-network:hover {
+	opacity: 1;
 }
 
 #sidebar .chan.active .close {

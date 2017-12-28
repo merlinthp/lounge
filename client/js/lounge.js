@@ -134,18 +134,6 @@ $(function() {
 					text: "List all channels",
 					data: target.data("id"),
 				});
-				let collapseTitle = "Collapse network";
-				let collapseClass = "collapse";
-				if (target.parent().hasClass("collapsed")) {
-					collapseTitle = "Expand network";
-					collapseClass = "expand";
-				}
-				output += templates.contextmenu_item({
-					class: collapseClass,
-					action: "collapse",
-					text: collapseTitle,
-					data: target.parent().data("id"),
-				});
 				output += templates.contextmenu_item({
 					class: "join",
 					action: "join",
@@ -563,9 +551,6 @@ $(function() {
 				target: $("#chat").data("id"),
 				text: "/kick " + itemData,
 			});
-		},
-		collapse: function(itemData) {
-			render.collapseNetwork(itemData);
 		},
 	};
 

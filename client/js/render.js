@@ -286,6 +286,8 @@ function loadMoreHistory(entries) {
 	});
 }
 
+sidebar.on("click", ".collapse-network", (event) => collapseNetwork(event.target));
+
 function collapseNetwork(lobby) {
-	$("#sidebar").find(`.network[data-id='${lobby}']`).toggleClass("collapsed");
+	$(lobby).parent().parent().toggleClass("collapsed");
 }
