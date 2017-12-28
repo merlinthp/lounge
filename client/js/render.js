@@ -286,8 +286,13 @@ function loadMoreHistory(entries) {
 	});
 }
 
-sidebar.on("click", ".collapse-network", (event) => collapseNetwork(event.target));
+sidebar.on("click", ".collapse-network", (event) => collapseNetwork($(event.target)));
 
-function collapseNetwork(lobby) {
-	$(lobby).parent().parent().toggleClass("collapsed");
+function collapseNetwork(collapseButton) {
+	$("#sidebar").find(`.network[data-id='${collapseButton.attr("data-id")}']`).toggleClass("collapsed");
+	if (collapseButton.attr("aria-expanded") === "true") {
+		collapseButton.attr("aria-expanded", false);
+	} else {
+		collapseButton.attr("aria-expanded", true);
+	}
 }
