@@ -281,7 +281,7 @@ kbd {
 #sidebar .chan.special::before,
 #chat .special .title::before { content: "\f03a"; /* http://fontawesome.io/icon/list/ */ }
 
-.chan::before {
+.chan.lobby::before {
 	padding-top: 3px;
 }
 
