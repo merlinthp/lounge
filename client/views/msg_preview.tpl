@@ -29,10 +29,13 @@
 		</a>
 	{{/equal}}
 	{{#equal type "error"}}
-		<a class="toggle-text" href="{{link}}" target="_blank" rel="noopener">
-			<div class="head" title="{{head}}">{{head}}</div>
-			<div class="body" title="{{body}}">{{body}}</div>
-		</a>
+		{{#equal error "image-too-big"}}
+			<em>
+				This image was too large to be previewed ({{friendlysize size}}).
+				<a href="{{link}}" target="_blank" rel="noopener">Click here</a>
+				to open it in a new window.
+			</em>
+		{{/equal}}
 	{{/equal}}
 </div>
 {{/preview}}
