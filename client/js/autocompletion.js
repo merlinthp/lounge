@@ -286,7 +286,7 @@ function completeChans(word) {
 		.each(function() {
 			const self = $(this);
 			if (!self.hasClass("lobby")) {
-				words.push(self.data("title"));
+				words.push(self.attr("aria-label"));
 			}
 		});
 
