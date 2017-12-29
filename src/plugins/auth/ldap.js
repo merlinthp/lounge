@@ -92,6 +92,7 @@ function advancedLdapAuth(user, password, callback) {
 					});
 					res.on("end", function() {
 						ldapclient.unbind();
+
 						if (!found) {
 							callback(false);
 						}
@@ -111,15 +112,18 @@ function ldapAuth(manager, client, user, password, callback) {
 		if (valid && !client) {
 			manager.addUser(user, null);
 		}
+
 		callback(valid);
 	}
 
 	let auth;
+
 	if ("baseDN" in Helper.config.ldap) {
 		auth = simpleLdapAuth;
 	} else {
 		auth = advancedLdapAuth;
 	}
+
 	return auth(user, password, callbackWrapper);
 }
 

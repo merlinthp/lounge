@@ -7,6 +7,7 @@ process.chdir(__dirname);
 // Perform node version check before loading any other files or modules
 // Doing this check as soon as possible allows us to avoid ES6 parser errors or other issues
 var pkg = require("./package.json");
+
 if (!require("semver").satisfies(process.version, pkg.engines.node)) {
 	/* eslint-disable no-console */
 	console.error("=== WARNING!");

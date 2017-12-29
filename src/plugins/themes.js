@@ -16,6 +16,7 @@ fs.readdir(path.join(__dirname, "..", "..", "public", "themes"), (err, builtInTh
 	if (err) {
 		return;
 	}
+
 	builtInThemes
 		.filter((theme) => theme.endsWith(".css"))
 		.map(makeLocalThemeObject)
@@ -26,6 +27,7 @@ fs.readdir(Helper.getPackagesPath(), (err, packages) => {
 	if (err) {
 		return;
 	}
+
 	packages
 		.map(makePackageThemeObject)
 		.forEach((theme) => {
@@ -56,24 +58,29 @@ function makeLocalThemeObject(css) {
 
 function getModuleInfo(packageName) {
 	let module;
+
 	try {
 		module = require(Helper.getPackageModulePath(packageName));
 	} catch (e) {
 		log.warn(`Specified theme ${colors.yellow(packageName)} is not installed in packages directory`);
 		return;
 	}
+
 	if (!module.thelounge) {
 		log.warn(`Specified theme ${colors.yellow(packageName)} doesn't have required information.`);
 		return;
 	}
+
 	return module.thelounge;
 }
 
 function makePackageThemeObject(moduleName) {
 	const module = getModuleInfo(moduleName);
+
 	if (!module || module.type !== "theme") {
 		return;
 	}
+
 	const modulePath = Helper.getPackageModulePath(moduleName);
 	const displayName = module.name || moduleName;
 	const filename = path.join(modulePath, module.css);

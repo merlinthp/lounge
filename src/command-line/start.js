@@ -25,20 +25,25 @@ program
 		if (options.host) {
 			log.warn(`${colors.bold("-H, --host <ip>")} is ${colors.bold.red("deprecated")} and will be removed in The Lounge v3. Use ${colors.bold("-c host=<ip>")} instead.`);
 		}
+
 		if (options.port) {
 			log.warn(`${colors.bold("-P, --port <port>")} is ${colors.bold.red("deprecated")} and will be removed in The Lounge v3. Use ${colors.bold("-c port=<port>")} instead.`);
 		}
+
 		if (options.bind) {
 			log.warn(`${colors.bold("-B, --bind <ip>")} is ${colors.bold.red("deprecated")} and will be removed in The Lounge v3. Use ${colors.bold("-c bind=<ip>")} instead.`);
 		}
+
 		if (options.public) {
 			log.warn(`${colors.bold("--public")} is ${colors.bold.red("deprecated")} and will be removed in The Lounge v3. Use ${colors.bold("-c public=true")} instead.`);
 		}
+
 		if (options.private) {
 			log.warn(`${colors.bold("--private")} is ${colors.bold.red("deprecated")} and will be removed in The Lounge v3. Use ${colors.bold("-c public=false")} instead.`);
 		}
 
 		var mode = Helper.config.public;
+
 		if (options.public) {
 			mode = true;
 		} else if (options.private) {

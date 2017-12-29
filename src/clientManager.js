@@ -57,6 +57,7 @@ ClientManager.prototype.autoloadUsers = function() {
 		// Existing users removed since last time users were loaded
 		_.difference(loaded, updatedUsers).forEach((name) => {
 			const client = _.find(this.clients, {name: name});
+
 			if (client) {
 				client.quit(true);
 				this.clients = _.without(this.clients, client);
@@ -91,6 +92,7 @@ ClientManager.prototype.loadUser = function(name) {
 		client = new Client(this, name, userConfig);
 		this.clients.push(client);
 	}
+
 	return client;
 };
 

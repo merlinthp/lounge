@@ -90,6 +90,7 @@ module.exports.initialize = () => {
 			if (Notification.permission === "default" && desktopNotificationsCheckbox.prop("checked")) {
 				desktopNotificationsCheckbox.attr("checked", false);
 			}
+
 			desktopNotificationsCheckbox.attr("disabled", false);
 			warningBlocked.hide();
 		}
@@ -149,6 +150,7 @@ module.exports.initialize = () => {
 			const highlightsTokens = options.highlights.map(function(h) {
 				return escapeRegExp(h);
 			});
+
 			if (highlightsTokens && highlightsTokens.length) {
 				module.exports.highlightsRE = new RegExp("\\b(?:" + highlightsTokens.join("|") + ")\\b", "i");
 			} else {

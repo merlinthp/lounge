@@ -22,6 +22,7 @@ module.exports.write = function(user, network, chan, msg) {
 	var line = `[${time}] `;
 
 	var type = msg.type.trim();
+
 	if (type === "message" || type === "highlight") {
 		// Format:
 		// [2014-01-01 00:00:00] <Arnold> Put that cookie down.. Now!!

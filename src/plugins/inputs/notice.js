@@ -12,6 +12,7 @@ exports.input = function(network, chan, cmd, args) {
 	irc.notice(args[0], message);
 
 	var targetChan = network.getChannel(args[0]);
+
 	if (typeof targetChan === "undefined") {
 		message = "{to " + args[0] + "} " + message;
 		targetChan = chan;

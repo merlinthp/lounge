@@ -8,6 +8,7 @@ exports.commands = ["query"];
 
 exports.input = function(network, chan, cmd, args) {
 	var target = args[0];
+
 	if (args.length === 0 || target.length === 0) {
 		chan.pushMessage(this, new Msg({
 			type: Msg.Type.ERROR,
@@ -17,11 +18,13 @@ exports.input = function(network, chan, cmd, args) {
 	}
 
 	var query = _.find(network.channels, {name: target});
+
 	if (typeof query !== "undefined") {
 		return;
 	}
 
 	var char = target[0];
+
 	if (network.irc.network.options.CHANTYPES && network.irc.network.options.CHANTYPES.indexOf(char) !== -1) {
 		chan.pushMessage(this, new Msg({
 			type: Msg.Type.ERROR,

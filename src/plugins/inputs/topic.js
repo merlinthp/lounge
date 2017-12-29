@@ -14,6 +14,7 @@ exports.input = function(network, chan, cmd, args) {
 
 		return;
 	}
+
 	network.irc.setTopic(chan.name, args.join(" "));
 	return true;
 };

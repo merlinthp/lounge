@@ -26,11 +26,14 @@ module.exports = function(irc, network) {
 		switch (data.type) {
 		case "PING": {
 			const split = data.message.split(" ");
+
 			if (split.length === 2) {
 				irc.ctcpResponse(data.nick, "PING", split[1]);
 			}
+
 			break;
 		}
+
 		case "SOURCE": {
 			const packageJson = require("../../../package.json");
 			irc.ctcpResponse(data.nick, "SOURCE", packageJson.repository.url);

@@ -20,6 +20,7 @@ exports.input = function(network, chan, cmd, args) {
 
 	if (!network.irc.network.cap.isEnabled("echo-message")) {
 		var channel = network.getChannel(target);
+
 		if (typeof channel !== "undefined") {
 			irc.emit("privmsg", {
 				nick: irc.user.nick,

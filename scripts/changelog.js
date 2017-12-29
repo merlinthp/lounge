@@ -387,6 +387,7 @@ function pullRequestNumbersInCommits(commits) {
 		if (pullRequestId) {
 			array.push(pullRequestId);
 		}
+
 		return array;
 	}, []);
 }
@@ -429,6 +430,7 @@ function printLine(entry) {
 	if (entry.title) {
 		return printPullRequest(entry);
 	}
+
 	return printCommit(entry);
 }
 
@@ -535,6 +537,7 @@ function parse(entries) {
 					if (!result[dependencyType][packageName]) {
 						result[dependencyType][packageName] = [];
 					}
+
 					result[dependencyType][packageName].push(entry);
 				} else {
 					log.info(`${colors.bold(packageName)} was updated in ${colors.green("#" + entry.number)} then removed since last release. Skipping.`);
@@ -551,6 +554,7 @@ function parse(entries) {
 		} else {
 			result.uncategorized.push(entry);
 		}
+
 		return result;
 	}, {
 		skipped: [],
@@ -572,6 +576,7 @@ function extractContributors(entries) {
 		if (pullRequest.author.login !== "greenkeeper") {
 			memo.add("@" + pullRequest.author.login);
 		}
+
 		return memo;
 	}, new Set());
 
@@ -655,6 +660,7 @@ async function addToChangelog(newEntry) {
 		} else {
 			log.error(error);
 		}
+
 		process.exit(1);
 	}
 
@@ -680,6 +686,7 @@ async function addToChangelog(newEntry) {
 
 	// Step 4: Print out some information about what just happened to the console
 	const commitCommand = `git commit -m 'Add changelog entry for v${version}' CHANGELOG.md`;
+
 	if (isPrerelease(version)) {
 		log.info(`You can now run: ${colors.bold(commitCommand)}`);
 	} else {
