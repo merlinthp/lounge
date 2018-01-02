@@ -9,6 +9,7 @@ module.exports = {
 		channel_list: require("./actions/channel_list.tpl"),
 		chghost: require("./actions/chghost.tpl"),
 		ctcp: require("./actions/ctcp.tpl"),
+		ctcp_request: require("./actions/ctcp_request.tpl"),
 		invite: require("./actions/invite.tpl"),
 		join: require("./actions/join.tpl"),
 		kick: require("./actions/kick.tpl"),
