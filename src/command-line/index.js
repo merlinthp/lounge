@@ -17,6 +17,7 @@ if (require("semver").lt(process.version, "6.0.0")) {
 
 program.version(Helper.getVersion(), "-v, --version")
 	.option("--home <path>", `${colors.bold.red("[DEPRECATED]")} Use the ${colors.green("THELOUNGE_HOME")} environment variable instead.`)
+	.option("--colors", "force enabling of colors in command outputs")
 	.option(
 		"-c, --config <key=value>",
 		"override entries of the configuration file, must be specified for each entry that needs to be overriden",
@@ -26,6 +27,10 @@ program.version(Helper.getVersion(), "-v, --version")
 
 // Parse options from `argv` returning `argv` void of these options.
 const argvWithoutOptions = program.parseOptions(process.argv);
+
+if (program.colors) {
+	colors.enabled = true;
+}
 
 if (program.home) {
 	log.warn(`${colors.bold("--home")} is ${colors.bold.red("deprecated")} and will be removed in The Lounge v3. Use the ${colors.bold("THELOUNGE_HOME")} environment variable instead.`);
@@ -73,9 +78,9 @@ if (process.argv[1].endsWith(`${require("path").sep}lounge`)) {
 	process.argv[1] = "thelounge";
 }
 
-// `parse` expects to be passed `process.argv`, but we need to remove to give it
-// a version of `argv` that does not contain options already parsed by
-// `parseOptions` above.
+// `parse` expects to be passed `process.argv`, but we need to give it a version
+// of `argv` that does not contain options already parsed by `parseOptions`
+// above.
 // This is done by giving it the updated `argv` that `parseOptions` returned,
 // except it returns an object with `args`/`unknown`, so we need to concat them.
 // See https://github.com/tj/commander.js/blob/fefda77f463292/index.js#L686-L763
