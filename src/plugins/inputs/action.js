@@ -1,7 +1,7 @@
 "use strict";
 
-var Chan = require("../../models/chan");
-var Msg = require("../../models/msg");
+const Chan = require("../../models/chan");
+const Msg = require("../../models/msg");
 
 exports.commands = ["slap", "me"];
 
@@ -15,8 +15,7 @@ exports.input = function(network, chan, cmd, args) {
 		return;
 	}
 
-	var irc = network.irc;
-	var text;
+	let text;
 
 	switch (cmd) {
 	case "slap":
@@ -29,11 +28,11 @@ exports.input = function(network, chan, cmd, args) {
 
 		text = text || args.join(" ");
 
-		irc.action(chan.name, text);
+		network.irc.action(chan.name, text);
 
 		if (!network.irc.network.cap.isEnabled("echo-message")) {
-			irc.emit("action", {
-				nick: irc.user.nick,
+			network.irc.emit("action", {
+				nick: network.irc.user.nick,
 				target: chan.name,
 				message: text,
 			});

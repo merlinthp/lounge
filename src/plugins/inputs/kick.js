@@ -1,7 +1,7 @@
 "use strict";
 
-var Chan = require("../../models/chan");
-var Msg = require("../../models/msg");
+const Chan = require("../../models/chan");
+const Msg = require("../../models/msg");
 
 exports.commands = ["kick"];
 
@@ -16,8 +16,7 @@ exports.input = function(network, chan, cmd, args) {
 	}
 
 	if (args.length !== 0) {
-		var irc = network.irc;
-		irc.raw("KICK", chan.name, args[0], args.slice(1).join(" "));
+		network.irc.raw("KICK", chan.name, args[0], args.slice(1).join(" "));
 	}
 
 	return true;

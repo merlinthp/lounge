@@ -38,7 +38,7 @@ program
 			log.warn(`${colors.bold("--private")} is ${colors.bold.red("deprecated")} and will be removed in The Lounge v3. Use ${colors.bold("-c public=false")} instead.`);
 		}
 
-		var mode = Helper.config.public;
+		let mode = Helper.config.public;
 		if (options.public) {
 			mode = true;
 		} else if (options.private) {

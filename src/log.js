@@ -1,15 +1,15 @@
 "use strict";
 
-var colors = require("colors/safe");
-var moment = require("moment");
+const colors = require("colors/safe");
+const moment = require("moment");
 const read = require("read");
-var Helper = require("./helper");
+const Helper = require("./helper");
 
 function timestamp(type, messageArgs) {
-	var format = Helper.config.logs.format || "YYYY-MM-DD HH:mm:ss";
-	var tz = Helper.config.logs.timezone || "UTC+00:00";
+	const format = Helper.config.logs.format || "YYYY-MM-DD HH:mm:ss";
+	const tz = Helper.config.logs.timezone || "UTC+00:00";
 
-	var time = moment().utcOffset(tz).format(format);
+	const time = moment().utcOffset(tz).format(format);
 
 	Array.prototype.unshift.call(messageArgs, colors.dim(time), type);
 

@@ -9,7 +9,7 @@ const Network = require("../../src/models/network");
 describe("Network", function() {
 	describe("#export()", function() {
 		it("should produce an valid object", function() {
-			var network = new Network({
+			const network = new Network({
 				awayMessage: "I am away",
 				name: "networkName",
 				channels: [
@@ -46,7 +46,7 @@ describe("Network", function() {
 		});
 
 		it("lobby should be at the top", function() {
-			var network = new Network({
+			const network = new Network({
 				name: "Super Nice Network",
 				channels: [
 					new Chan({name: "AAAA!", type: Chan.Type.QUERY}),
@@ -61,7 +61,7 @@ describe("Network", function() {
 		});
 
 		it("should maintain channel reference", function() {
-			var chan = new Chan({
+			const chan = new Chan({
 				name: "#506-bug-fix",
 				messages: [
 					new Msg({
@@ -70,7 +70,7 @@ describe("Network", function() {
 				],
 			});
 
-			var network = new Network({
+			const network = new Network({
 				name: "networkName",
 				channels: [
 					chan,
